@@ -9,10 +9,7 @@ MESH_FILENAME = SU2ConfigField(
 MESH_FORMAT = SU2ConfigField(
     "MESH_FORMAT", "SU2",
     "Mesh input file format.",
-    options=(
-        "SU2",
-        "CGNS"
-    ))
+    options=("SU2", "CGNS"))
 
 MESH_OUT_FILENAME = SU2ConfigField(
     "MESH_OUT_FILENAME", "mesh_out.su2",
@@ -29,10 +26,7 @@ SOLUTION_ADJ_FILENAME = SU2ConfigField(
 TABULAR_FORMAT = SU2ConfigField(
     "TABULAR_FORMAT", "CSV",
     "Output tabular file format.",
-    options=(
-        "CSV",
-        "TECPLOT"
-    ))
+    options=("CSV", "TECPLOT"))
 
 OUTPUT_FILES = SU2ConfigField(
     "OUTPUT_FILES", ("RESTART_ASCII", "PARAVIEW", "SURFACE_PARAVIEW"),

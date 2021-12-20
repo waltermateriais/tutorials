@@ -2,13 +2,22 @@
 from textwrap import dedent
 from ..su2configfield import SU2ConfigField
 
-# % Monotonic Upwind Scheme for Conservation Laws (TVD) in the flow equations.
-# %           Required for 2nd order upwind schemes (NO, YES)
-# MUSCL_FLOW= YES
+MUSCL_FLOW = SU2ConfigField(
+    "MUSCL_FLOW", "YES", 
+    "Monotonic Upwind Scheme for Conservation Laws (TVD) in the flow equations.",
+    options=("YES", "NO"),
+    detail="Required for 2nd order upwind schemes.")
 
-# % Slope limiter (NONE, VENKATAKRISHNAN, VENKATAKRISHNAN_WANG,
-# %                BARTH_JESPERSEN, VAN_ALBADA_EDGE)
-# SLOPE_LIMITER_FLOW= VENKATAKRISHNAN
+SLOPE_LIMITER_FLOW = SU2ConfigField(
+    "SLOPE_LIMITER_FLOW", "VENKATAKRISHNAN", 
+    "Slope limiter.",
+    options=(
+        "NONE",
+        "VENKATAKRISHNAN",
+        "VENKATAKRISHNAN_WANG",
+        "BARTH_JESPERSEN",
+        "VAN_ALBADA_EDGE"
+    ))
 
 # % Monotonic Upwind Scheme for Conservation Laws (TVD) in the turbulence equations.
 # %           Required for 2nd order upwind schemes (NO, YES)
@@ -33,10 +42,13 @@ from ..su2configfield import SU2ConfigField
 # % Slope limiter (NONE, VENKATAKRISHNAN, BARTH_JESPERSEN, VAN_ALBADA_EDGE)
 # SLOPE_LIMITER_ADJTURB= VENKATAKRISHNAN
 
-# % Coefficient for the Venkat's limiter (upwind scheme). A larger values decrease
-# %             the extent of limiting, values approaching zero cause
-# %             lower-order approximation to the solution (0.05 by default)
-# VENKAT_LIMITER_COEFF= 0.05
+VENKAT_LIMITER_COEFF = SU2ConfigField(
+    "VENKAT_LIMITER_COEFF", 0.05, 
+    "Coefficient for the Venkat's limiter (upwind scheme).",
+    detail=dedent("""\
+    A larger values decrease the extent of limiting, values approaching
+    zero cause lower-order approximation to the solution. 
+    """))
 
 # % Reference coefficient for detecting sharp edges (3.0 by default).
 # REF_SHARP_EDGES = 3.0

@@ -93,12 +93,18 @@ MARKER_OUTLET = SU2ConfigField(
 # %
 # % Actuator disk data input file name
 # ACTDISK_FILENAME= actuatordisk.dat
-# %
-# % Supersonic inlet boundary marker(s) (NONE = no marker)
-# % Format: (inlet marker, temperature, static pressure, velocity_x,
-# %           velocity_y, velocity_z, ... ), i.e. primitive variables specified.
-# MARKER_SUPERSONIC_INLET= ( NONE )
-# %
+
+MARKER_SUPERSONIC_INLET = SU2ConfigField(
+    "MARKER_SUPERSONIC_INLET", "NONE",
+    "Supersonic inlet boundary marker(s) (NONE = no marker)",
+    detail=dedent("""\
+
+    Format:
+        (inlet marker, temperature, static pressure,
+         velocity_x, velocity_y, velocity_z, ... )
+         i.e. primitive variables specified.
+    """))
+
 # % Supersonic outlet boundary marker(s) (NONE = no marker)
 # MARKER_SUPERSONIC_OUTLET= ( NONE )
 # %
