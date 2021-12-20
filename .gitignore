@@ -1,5 +1,14 @@
 # ---> Manual
+*.swp
+
+# Automatically generated
 cases/
+
+# Any draft of code
+sandbox/
+
+# Generated meshes
+notebooks/meshes/mesh_wedge_inv.su2
 
 # ---> Python
 # Byte-compiled / optimized / DLL files
