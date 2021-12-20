@@ -21,14 +21,16 @@ class SU2StaticCase:
     """ Manage creation of an incremental case. """
     def __init__(self):
         self.fields = []
-
+        
     def add_field(self, field, overwrite=True):
         """ Add field to main case structure. """
         if not overwrite and field._name in self.fields:
             raise KeyError(f"{field._name} already in class")
 
+        if not hasattr(self, field._name):
+            self.fields.append(field._name)
+
         setattr(self, field._name, field)
-        self.fields.append(field._name)
 
     def dump_case(self, case_dir):
         """ Dump this case to target case directory. """
@@ -36,13 +38,17 @@ class SU2StaticCase:
         case_dir.mkdir(parents=True, exist_ok=True)
 
         mesh = getattr(self, "MESH_FILENAME")
-        shutil.copy(mesh.value, case_dir / "mesh.msh")
+        mesh_ori = str(mesh.value)
+
+        shutil.copy(mesh_ori, case_dir / "mesh.msh")
         mesh._value = "mesh.msh"
 
         with open(case_dir / "config.cfg", "w") as fp:
             fp.write(FILE_HEADER +  "\n")
             for field in self.fields:
                 fp.write(str(getattr(self, field)) +  "\n")
+
+        mesh._value = mesh_ori
 
     @staticmethod
     def run_command(case_dir, command):
