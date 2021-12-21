@@ -29,6 +29,9 @@ OBJECT_TYPES = {
     "U": "volVectorField",
 
     # constant
+    "chemistryProperties": "dictionary",
+    "initialConditions": "dictionary",
+    "thermophysicalProperties": "dictionary",
     "transportProperties": "dictionary",
 
     # system
@@ -70,6 +73,7 @@ def make_file(case, loc, fname, body, class_type=None, force_type=False):
 def run_cmd(case, logname, command):
     """ Run command from case directory. """
     with open(f"{case}/{logname}", "w") as output:
+        print(f"Running from {case}")
         server = Popen(command, cwd=case, shell=True,
                        stdout=output, stderr=output)
         server.communicate()
