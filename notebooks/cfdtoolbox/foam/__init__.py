@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 from subprocess import Popen
+from jinja2 import Template
 
 FOAM_VERSION = "v2106"
 FOAM_UTILS = Path(__file__).resolve().parent / "snippets"
@@ -27,15 +28,20 @@ OBJECT_TYPES = {
     # zero
     "p": "volScalarField",
     "U": "volVectorField",
+    "T": "volScalarField",
 
     # constant
+    "combustionProperties": "dictionary",
     "chemistryProperties": "dictionary",
+    "g": "uniformDimensionedVectorField",
     "initialConditions": "dictionary",
     "thermophysicalProperties": "dictionary",
     "transportProperties": "dictionary",
-
+    "turbulenceProperties": "dictionary",
+    
     # system
     "controlDict": "dictionary",
+    "decomposeParDict": "dictionary",
     "fvSchemes": "dictionary",
     "fvSolution": "dictionary",
 
@@ -77,3 +83,27 @@ def run_cmd(case, logname, command):
         server = Popen(command, cwd=case, shell=True,
                        stdout=output, stderr=output)
         server.communicate()
+
+        
+def boundary_fields_template(boundaries):
+    """ Create a template from a set of names. """
+    # TODO move this to file.
+    baseBoundaryField = Template("""\
+    dimensions      {% raw %}{{ {% endraw %}dimensions{% raw %} }}{% endraw %};
+
+    internalField   uniform {% raw %}{{ {% endraw %}uniform{% raw %} }}{% endraw %};
+
+    boundaryField
+    {
+        {% for patch in boundaries %}
+        {{ patch }}
+        {
+    {% raw %}{{ {% endraw %}{{ patch }}{% raw %} }}{% endraw %}
+        }
+        {% endfor %}
+    }
+    """)
+    
+    return Template(baseBoundaryField.render(boundaries=boundaries))
+
+
