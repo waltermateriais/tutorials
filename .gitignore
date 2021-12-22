@@ -9,6 +9,9 @@ sandbox/
 
 # Generated meshes
 notebooks/meshes/mesh_wedge_inv.su2
+notebooks/meshes/mesh_wedge_phd.su2
+notebooks/meshes/mesh_wedge_phd.msh
+notebooks/meshes/mesh_wedge_phd.unv
 
 # ---> Python
 # Byte-compiled / optimized / DLL files
