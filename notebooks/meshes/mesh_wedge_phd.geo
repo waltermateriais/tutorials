@@ -19,22 +19,22 @@ radius = 0.014;
 theta = 1 * Pi / 180;
 
 // Cell size over length.
-size_length = 0.005;
+size_length = 0.0050;
 
 // Cell characteristic size over radius.
-size_radius = 0.001;
+size_radius = 0.0005;
 
 // Number of cells over length.
-nl = Ceil(length / size_length);
+nl = 1 + Ceil(length / size_length);
 
 // Number of cells over radius.
-nr = Ceil(radius / size_radius);
+nr = 1 + Ceil(radius / size_radius);
 
 // Progression factor over length.
 prl = 1.0;
 
 // Progression factor over radius.
-prr = 0.9;
+prr = 0.95;
 
 // -----------------------------------------------------------------
 // Construction

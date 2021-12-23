@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 from subprocess import Popen
+from textwrap import dedent
 from jinja2 import Template
+
+from . import mesh
+
+__all__ = [
+    "mesh"
+]
 
 FOAM_VERSION = "v2106"
 FOAM_UTILS = Path(__file__).resolve().parent / "snippets"
@@ -49,6 +56,34 @@ OBJECT_TYPES = {
     "foamDataToFluentDict": "dictionary"
 }
 
+DIMENSIONS = {
+    "0": "[ 0  0  0  0  0  0  0 ]",
+    "p": "[ 1 -1 -2  0  0  0  0 ]",
+    "U": "[ 0  1 -1  0  0  0  0 ]",
+    "T": "[ 0  0  0  1  0  0  0 ]"
+}
+
+BC_ZERO_GRADIENT  = "        type            zeroGradient;"
+BC_WEDGE          = "        type            wedge;"
+BC_NOSLIP         = "        type            noSlip;"
+BC_FIXED_VALUE    = f"""\
+        type            fixedValue;
+            value           uniform {{value}};\
+"""
+BC_INLET_OUTLET   = f"""\
+        type            inletOutlet;
+            inletValue      uniform {{inletValue}};
+            value           uniform {{value}};\
+"""
+BC_TOTAL_PRESSURE = f"""\
+        type            totalPressure;
+            p0              {{p0}};\
+"""
+
+BC_PRESSURE_INLET_OUTLET_VELOCITY = f"""\
+        type            pressureInletOutletVelocity;
+            value           {{value}};\
+"""
 
 def make_header(object_name, class_type, force_type=False):
     """ Compose file header for class type/given object. """
@@ -107,3 +142,19 @@ def boundary_fields_template(boundaries):
     return Template(baseBoundaryField.render(boundaries=boundaries))
 
 
+def gravity_file(axis, g=-9.81):
+    """ Generate the body of gravitational acceleration file. """
+    if axis.lower() == "x":
+        value = "({g} 0.00 0.00)"
+    if axis.lower() == "y":
+        value = "(0.00 {g} 0.00)"
+    if axis.lower() == "z":
+        value = "(0.00 0.00 {g})"
+    
+    body = dedent("""\
+    dimensions      [0 1 -2 0 0 0 0];
+
+    value           {value};
+    """.format(value=value.format(g=g)))
+    
+    return body
