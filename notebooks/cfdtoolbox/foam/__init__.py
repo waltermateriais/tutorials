@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
-from subprocess import Popen
 from textwrap import dedent
 from jinja2 import Template
 
@@ -109,15 +108,6 @@ def make_file(case, loc, fname, body, class_type=None, force_type=False):
     with open(loc / fname, "w") as fp:
         head = make_header(fname, class_type, force_type)
         fp.write(f"{head}\n{body}\n\n{FOAM_END}\n")
-
-
-def run_cmd(case, logname, command):
-    """ Run command from case directory. """
-    with open(f"{case}/{logname}", "w") as output:
-        print(f"Running from {case}")
-        server = Popen(command, cwd=case, shell=True,
-                       stdout=output, stderr=output)
-        server.communicate()
 
         
 def boundary_fields_template(boundaries):
