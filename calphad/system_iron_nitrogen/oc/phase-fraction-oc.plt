@@ -43,10 +43,11 @@ set style line 100 lt 1 lc rgb "#FF3333" lw 3 pt 1
 # unset multiplot
 
 set xrange [  0.0000E+00:  2.5000E-02] 
+set yrange [ -2.0000E-02:  1.0200E+00] 
 
 
 # begin of data with lines     58
-$OCT211224172524 << EOD
+$OCT211224181512 << EOD
 KEYS:  W(N) NP(BCC-A2) NP(FCC-A1#1) 
  # First line: FCC_A1#1
    1    2.000000E-02 NaN     1.000000E+00
@@ -116,4 +117,4 @@ KEYS:  W(N) NP(BCC-A2) NP(FCC-A1#1)
 EOD
 
 
-plot for [i=3: 4] $OCT211224172524 using 2:i with lines ls (i-2+ 0) title columnheader(i)
+plot for [i=3: 4] $OCT211224181512 using 2:i with lines ls (i-2+ 0) title columnheader(i)

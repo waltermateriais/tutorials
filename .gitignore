@@ -13,6 +13,9 @@ notebooks/meshes/mesh_wedge_phd.su2
 notebooks/meshes/mesh_wedge_phd.msh
 notebooks/meshes/mesh_wedge_phd.unv
 
+# opengen builds
+python_build/
+
 # ---> Python
 # Byte-compiled / optimized / DLL files
 __pycache__/

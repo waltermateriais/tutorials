@@ -46,7 +46,7 @@ set xrange [  0.0000E+00:  2.5000E-02]
 
 
 # begin of data with lines     58
-$OCT211224172524 << EOD
+$OCT211224181512 << EOD
 KEYS:  W(N) W(BCC-A2,N) W(FCC-A1#1,N) 
  # First line: FCC_A1#1
    1    2.000000E-02 NaN     2.000000E-02
@@ -116,4 +116,4 @@ KEYS:  W(N) W(BCC-A2,N) W(FCC-A1#1,N)
 EOD
 
 
-plot for [i=3: 4] $OCT211224172524 using 2:i with lines ls (i-2+ 0) title columnheader(i)
+plot for [i=3: 4] $OCT211224181512 using 2:i with lines ls (i-2+ 0) title columnheader(i)
