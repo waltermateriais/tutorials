@@ -271,7 +271,7 @@ with warnings.catch_warnings():
     system.force_cap = 0
     
     sampling_interval = 100
-    sampling_iterations = 100
+    sampling_iterations = 4000
 
     # Pass the ids of the particles to be tracked to the observable.
     part_pos = ParticlePositions(ids=range(no_part))
