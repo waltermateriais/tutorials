@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amssymb}
+\usepackage{xfrac}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage[round]{natbib}
+
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+
+\title{Study notes and solutions}
+\author{Walter Dal'Maz Silva}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+\input{components/dimensionless-numbers.tex}
+%\input{components/draft.tex}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
