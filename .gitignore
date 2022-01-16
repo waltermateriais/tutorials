@@ -152,7 +152,8 @@ target/
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
-Makefile
+# I have Makefiles in the project
+#Makefile
 cmake_install.cmake
 install_manifest.txt
 
