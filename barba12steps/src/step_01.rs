@@ -51,7 +51,7 @@ fn main() {
     let mut u: Vec<f64> = vec![1.0; nx];
 
     // Apply step initial condition.
-    for k in (nx / 4)..(nx / 2) { u[k] = 2.0; }
+    for k in (nx / 4)..(nx / 2 + 1) { u[k] = 2.0; }
 
     // Create a plot of initial state.
     plot_initial(&x, &u, l);

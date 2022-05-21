@@ -21,6 +21,25 @@
 
 use plotters::prelude::*;
 
+pub fn pow(a: f64, n: i32) -> f64 {
+    match n {
+        -4 => 1.0 / pow(a, 4),
+        -3 => 1.0 / pow(a, 3),
+        -2 => 1.0 / pow(a, 2),
+        -1 => 1.0 / a,
+         0 => 1.0,
+         1 => a,
+         2 => a * a,
+         3 => a * a * a,
+         4 => a * a * a * a,
+        _ => f64::powf(a, n as f64)
+    }
+}
+
+pub fn exp(n: f64) -> f64 {
+    n.exp()
+}
+
 pub fn linspace(x0: f64, xend: f64, n: usize) -> Vec<f64> {
     let dx = (xend - x0) / (n as f64 - 1.0);
     (0..n).map(|i| x0 + (i as f64) * dx).collect()

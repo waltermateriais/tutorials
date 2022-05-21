@@ -22,61 +22,48 @@
 use barba12steps::*;
 
 fn main() {
-    // Number of FD nodes in space (experiment with both).
-    let nx: usize = 41;
-    // let nx: usize = 81;
+    lineardiff(41);
+}
 
-    // Number of time-steps to advance solution.
-    let nt: usize = 20;
-
-    // Size of time-step [s].
-    let dt: f64 = 0.025;
-
-    // Space length [m].
+fn lineardiff(nx: usize) {
+    let sigma: f64 = 0.2;
+    let nu: f64 = 0.3;
     let l: f64 = 2.0;
-
-    // Compute space step [m].
     let dx: f64 = l / (nx as f64 - 1.0);
+    let nt: usize = 20;
+    let dt: f64 = sigma * f64::powf(dx, 2.0) / nu;
+    let base: &str = "results/step_04_{name}_nx{nx}.png";
 
-    // Compute problem coefficient.
-    let alpha: f64 = dt / dx;
-
-    // Allocate space coordinates [m].
+    let alpha: f64 = nu * dt / f64::powf(dx, 2.0);
     let x: Vec<f64> = barba12steps::linspace(0.0, l, nx);
-
-    // Allocate solution memory.
     let mut u: Vec<f64> = vec![1.0; nx];
 
-    // Apply step initial condition.
     for k in (nx / 4)..(nx / 2 + 1) { u[k] = 2.0; }
 
-    // Create a plot of initial state.
-    plot_initial(&x, &u, l);
+    let filename: String = make_filename(base, nx, "initial");
+    let caption: String = "Initial state".to_string();
+    plot_state(&filename, &caption, &x, &u, l);
 
-    // Loop over time and space to compute solution.
     for _ in 0..nt {
         let un = u.to_vec();
-        for i in 1..nx {
-            u[i] = un[i] * (1.0 - alpha * (un[i] - un[i - 1]));
+        for i in 1..(nx-1) {
+            u[i] = un[i] + alpha * (un[i+1] - 2.0 * un[i] + un[i-1]);
         }
     }
 
-    // Create a plot of final state.
-    plot_final(&x, &u, l);
-}
-
-fn plot_initial(x: &Vec<f64>, u: &Vec<f64>, l: f64) {
-    let filename: String = "results/step_02_initial.png".to_string();
-    let caption: String = "Initial state".to_string();
-    let xlabel: String = "Position [m]".to_string();
-    let ylabel: String = "Amplitude [-]".to_string();
-    plot2d(&filename, &x, &u, &caption, &xlabel, &ylabel, 
-           (-1.0e-06, l + 1.0e-06), (0.79, 2.21));
-}
-
-fn plot_final(x: &Vec<f64>, u: &Vec<f64>, l: f64) {
-    let filename: String = "results/step_02_final.png".to_string();
+    let filename: String = make_filename(base, nx, "final");
     let caption: String = "Final state".to_string();
+    plot_state(&filename, &caption, &x, &u, l);
+}
+
+fn make_filename(base: &str, nx: usize, name: &str) -> String {
+    base.replace("{name}", name)
+        .replace("{nx}", nx.to_string().as_str())
+        .to_string()
+}
+
+fn plot_state(filename: &String, caption: &String, 
+              x: &Vec<f64>, u: &Vec<f64>, l: f64) {
     let xlabel: String = "Position [m]".to_string();
     let ylabel: String = "Amplitude [-]".to_string();
     plot2d(&filename, &x, &u, &caption, &xlabel, &ylabel, 
