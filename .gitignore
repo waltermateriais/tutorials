@@ -1,5 +1,6 @@
 # ---> Manual
 *.swp
+desktop.ini
 
 # Automatically generated
 cases/

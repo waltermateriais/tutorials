@@ -484,10 +484,13 @@ def make_optimizer():
     rect = og.constraints.Rectangle(xmin=[0, 0, 0, 0], 
                                     xmax=[1, 1, 1, 1])
     
-    problem = og.builder.Problem(x, p, f)          \
-        .with_aug_lagrangian_constraints(g, set_c) \
-        .with_constraints(rect)
-        #@.with_penalty_constraints(g)
+            # .with_penalty_constraints(g)  \
+    # problem = og.builder.Problem(x, p, f)          \
+    #     .with_aug_lagrangian_constraints(g, set_c) \
+    #     .with_constraints(rect)
+    problem = og.builder.Problem(x, p, f)
+        # .with_constraints(rect)
+
 
     meta = og.config.OptimizerMeta()         \
         .with_version("0.1.0")               \
@@ -504,9 +507,9 @@ def make_optimizer():
         .with_tcp_interface_config(tcp_config)
         
     solver_config = og.config.SolverConfiguration()   \
-                .with_lbfgs_memory(100)               \
-                .with_tolerance(1.0e-08)              \
-                .with_max_inner_iterations(5000)
+                .with_lbfgs_memory(20)                \
+                .with_tolerance(1.0e-06)              \
+                .with_max_inner_iterations(10000)
 
     builder = og.builder.OpEnOptimizerBuilder(
         problem,
@@ -515,10 +518,6 @@ def make_optimizer():
         solver_configuration=solver_config)
 
     builder.build()
-
-    # mng = og.tcp.OptimizerTcpManager("python_build/ceqsier")
-    # mng.start()
-    # from IPython import embed; embed(colors="Linux")
 
 
 if __name__ == "__main__":
